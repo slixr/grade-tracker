@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade Tracker</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon" data-icon="book"></span>
+      <div>
+        <h1>Grade Tracker</h1>
+        <p class="tagline">Monitor Your Academic Progress</p>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="dashboard"><span class="nav-icon" data-icon="dashboard"></span>Dashboard</button>
+      <button class="tab-btn" data-tab="subjects"><span class="nav-icon" data-icon="subjects"></span>Subjects</button>
+      <button class="tab-btn" data-tab="goals"><span class="nav-icon" data-icon="goals"></span>Goals</button>
+      <button class="tab-btn" data-tab="settings"><span class="nav-icon" data-icon="settings"></span>Settings</button>
+    </nav>
+  </header>
+
+  <main id="app">
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view active">
+      <h2>Dashboard</h2>
+      <p class="subtext">Overview of your academic performance</p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label" id="stat-overall-average-label">Semester Average</span>
+          <span class="stat-value" id="stat-overall-average">--</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Total Subjects</span>
+          <span class="stat-value" id="stat-total-subjects">--</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Current Honors Level</span>
+          <span class="stat-value" id="stat-honors-level">--</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Goals On Track</span>
+          <span class="stat-value" id="stat-goals-on-track">--</span>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Subject Performance</h3>
+          <div class="chart-controls">
+            <div class="chart-control-field">
+              <label for="subject-performance-view">View</label>
+              <select id="subject-performance-view">
+                <option value="yearly" selected>Yearly</option>
+                <option value="semester1">Semester 1</option>
+                <option value="semester2">Semester 2</option>
+                <option value="overall">Overall</option>
+              </select>
+            </div>
+            <div class="chart-control-field" id="subject-performance-year-wrap">
+              <label for="subject-performance-year">School year</label>
+              <select id="subject-performance-year"></select>
+            </div>
+          </div>
+          <div id="bar-chart" class="bar-chart"></div>
+        </div>
+        <div class="card">
+          <h3>Goal Progress</h3>
+          <div id="dashboard-goal-progress" class="goal-progress-list"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Yearly Honors</h3>
+        <div id="dashboard-yearly-honors" class="yearly-honors-list"></div>
+      </div>
+
+      <div class="card">
+        <h3>Subject Progress</h3>
+        <div id="dashboard-subject-list" class="subject-progress-list"></div>
+      </div>
+    </section>
+
+    <!-- SUBJECTS -->
+    <section id="view-subjects" class="view">
+      <div class="view-header-row">
+        <div>
+          <h2>Subjects</h2>
+          <p class="subtext">Manage your subjects and grades</p>
+        </div>
+        <button class="btn-primary" id="btn-add-subject">+ Add Subject</button>
+      </div>
+      <div id="subjects-grid" class="subjects-grid"></div>
+    </section>
+
+    <!-- GOALS -->
+    <section id="view-goals" class="view">
+      <div class="view-header-row">
+        <div>
+          <h2>Goals</h2>
+          <p class="subtext">Set and track your academic goals</p>
+        </div>
+        <button class="btn-primary" id="btn-add-goal">+ Add Goal</button>
+      </div>
+      <div class="card highlight-card">
+        <span class="stat-label">Current Semester Average</span>
+        <span class="stat-value" id="goals-current-average">--</span>
+      </div>
+      <div id="goals-list" class="goals-list"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="view-settings" class="view">
+      <h2>Settings</h2>
+      <p class="subtext">Customize your grade tracker experience</p>
+
+      <div class="card">
+        <h3><span class="section-icon" data-icon="palette"></span>Appearance</h3>
+        <div class="setting-row">
+          <div>
+            <strong>Dark Mode</strong>
+            <p class="subtext">Toggle dark mode on or off</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-dark-mode" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="section-icon" data-icon="grade"></span>Grading System</h3>
+        <p class="subtext">Choose how grades are displayed</p>
+        <label for="select-grading-system">Display Format</label>
+        <select id="select-grading-system">
+          <option value="PERCENTAGE">% Percentage (0-100%)</option>
+          <option value="STANDARD">Letter (A+ - F)</option>
+          <option value="IB">IB Scale (1-7)</option>
+        </select>
+        <p class="hint" id="grading-system-hint"></p>
+      </div>
+
+      <div class="card">
+        <h3><span class="section-icon" data-icon="academic"></span>Academic Settings</h3>
+        <p class="subtext">Configure semester and academic preferences</p>
+        <label for="select-school-program">School awards program</label>
+        <select id="select-school-program">
+          <option value="JHS">Junior High School</option>
+          <option value="SHS_STANDARD">Senior High School Standard</option>
+          <option value="IBDP">IB Diploma Programme</option>
+        </select>
+        <p class="hint" id="school-program-hint"></p>
+        <p class="hint">Awards evaluate academic grades only. Conduct, club membership, and disciplinary status are not evaluated.</p>
+        <label for="input-default-semester">Default Semester</label>
+        <input type="text" id="input-default-semester" />
+        <label for="select-tok-grade">TOK Grade (used for IB Honors calculation)</label>
+        <select id="select-tok-grade">
+          <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+        </select>
+        <div class="setting-row core-completion-row">
+          <div>
+            <strong>Extended Essay complete</strong>
+            <p class="subtext">Required for IB Honors</p>
+          </div>
+          <label class="switch" aria-label="Extended Essay complete">
+            <input type="checkbox" id="toggle-ee-complete" />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-row core-completion-row">
+          <div>
+            <strong>CAS complete</strong>
+            <p class="subtext">Required for IB Honors</p>
+          </div>
+          <label class="switch" aria-label="CAS complete">
+            <input type="checkbox" id="toggle-cas-complete" />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="hint">IB Honors require grades for all six subjects, TOK C or higher, and completed EE and CAS. Academic Excellence requires TOK B or higher.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="section-icon" data-icon="data"></span>Data Management</h3>
+        <p class="subtext">All data is saved locally in a SQLite database on this device</p>
+        <div class="settings-actions">
+          <button class="btn-secondary" id="btn-export-data">Export Data</button>
+          <button class="btn-danger" id="btn-clear-data">Clear All Data</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Generic modal used for Add Subject / Add Grade / Add Goal forms -->
+  <div id="modal-backdrop" class="modal-backdrop">
+    <div class="modal" id="modal-box"></div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/subjects.js"></script>
+  <script src="js/goals.js"></script>
+  <script src="js/settings.js"></script>
+  <script>
+    document.querySelectorAll("[data-icon]").forEach((element) => {
+      element.innerHTML = icon(element.dataset.icon);
+    });
+  </script>
+</body>
+</html>
